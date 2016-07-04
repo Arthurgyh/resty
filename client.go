@@ -60,7 +60,7 @@ var (
 
 	plainTextType   = "text/plain; charset=utf-8"
 	jsonContentType = "application/json; charset=utf-8"
-	formContentType = "application/x-www-form-urlencoded"
+	formContentType = "application/x-www-form-urlencoded; charset=utf-8"
 
 	jsonCheck = regexp.MustCompile("(?i:[application|text]/json)")
 	xmlCheck  = regexp.MustCompile("(?i:[application|text]/xml)")

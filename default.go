@@ -35,7 +35,7 @@ func New() *Client {
 		Debug:      false,
 		Log:        getLogger(os.Stderr),
 		httpClient: &http.Client{Jar: cookieJar},
-		transport:  &http.Transport{},
+		transport:  &http.Transport{MaxIdleConnsPerHost: 10},
 		mutex:      &sync.Mutex{},
 	}
 
