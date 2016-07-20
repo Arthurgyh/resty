@@ -61,6 +61,10 @@ func (r *Request) SetHeader(header, value string) *Request {
 	return r
 }
 
+func (r *Request) GetBodyBuf() *bytes.Buffer {
+	return r.bodyBuf
+}
+
 // SetHeaders method sets multiple headers field and its values at one go in the current request.
 // Example: To set `Content-Type` and `Accept` as `application/json`
 //
@@ -411,6 +415,17 @@ func (r *Request) Execute(method, url string) (*Response, error) {
 	r.URL = url
 
 	return r.client.execute(r)
+}
+
+func (r *Request) PrepareExecute(method, url string) (*Response, error) {
+	if r.isMultiPart && !(method == POST || method == PUT) {
+		return nil, fmt.Errorf("Multipart content is not allowed in HTTP verb [%v]", method)
+	}
+
+	r.Method = method
+	r.URL = url
+
+	return r.client.prepareExecute(r)
 }
 
 func (r *Request) fmtBodyString() (body string) {

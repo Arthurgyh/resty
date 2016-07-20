@@ -596,6 +596,20 @@ func (c *Client) SetScheme(scheme string) *Client {
 }
 
 // executes the given `Request` object and returns response
+func (c *Client) prepareExecute(req *Request) (*Response, error) {
+	// Apply Request middleware
+	var err error
+	for _, f := range c.beforeRequest {
+		err = f(c, req)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return nil, nil
+}
+
+// executes the given `Request` object and returns response
 func (c *Client) execute(req *Request) (*Response, error) {
 	// Apply Request middleware
 	var err error
